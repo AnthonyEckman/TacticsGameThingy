@@ -90,19 +90,19 @@ public class Tile : MonoBehaviour
         foreach (Collider item in colliders)
         {
             Tile tile = item.GetComponent<Tile>();
-            if(tile != null && tile.walkable && !occupied)
+            if(tile != null && tile.walkable)
             {
-                
+                adjacencyList.Add(tile);
 
                 RaycastHit hit;
                 if (Physics.Raycast(tile.transform.position, Vector3.up, out hit, 1))
                 {
                     tile.occupied = true;
                 }
-                if (!Physics.Raycast(tile.transform.position, Vector3.up,out hit,1)&& !tile.occupied || (tile == target) )
-                {
-                    adjacencyList.Add(tile);
-                }
+                //if (!Physics.Raycast(tile.transform.position, Vector3.up,out hit,1) || (tile == target) )
+                //{
+                  //  adjacencyList.Add(tile);
+               // }
                 
                 
             }

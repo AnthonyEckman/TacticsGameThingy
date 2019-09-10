@@ -84,7 +84,7 @@ public class BetterTurnManager : MonoBehaviour
         }
         else if (turnQueue.Count == 0 && team2Turn)
         {
-            Debug.Log("taco");
+            
             team1Turn = true;
             team2Turn = false;
             foreach (GameObject soldier in Team1)
@@ -133,6 +133,37 @@ public class BetterTurnManager : MonoBehaviour
         }
     }
 
+    public void ManualEndTurn()
+    {
+        GameObject unit = turnQueue.Dequeue();
+        unit.GetComponent<TacticsMove>().EndTurn();
+        if (turnQueue.Count > 0)
+        {
+            StartTurn();
+        }
+        else if (turnQueue.Count == 0 && team1Turn)
+        {
 
+            team1Turn = false;
+            team2Turn = true;
+            foreach (GameObject soldier in Team2)
+            {
+                turnQueue.Enqueue(soldier);
+            }
+            StartTurn();
+        }
+        else if (turnQueue.Count == 0 && team2Turn)
+        {
+
+            team1Turn = true;
+            team2Turn = false;
+            foreach (GameObject soldier in Team1)
+            {
+                turnQueue.Enqueue(soldier);
+            }
+            StartTurn();
+        }
+
+    }
 
 }

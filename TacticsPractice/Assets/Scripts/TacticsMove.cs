@@ -9,8 +9,9 @@ public class TacticsMove : MonoBehaviour
     GameObject[] tiles;
 
     Stack<Tile> path = new Stack<Tile>();
-    Tile currentTile;
+    public Tile currentTile;
 
+    public bool hasMoved = false;
     public bool moving = false;
     public int move = 5;
     public float jumpHeight = 2;
@@ -21,11 +22,11 @@ public class TacticsMove : MonoBehaviour
     //Unit Stats//
     public int health = 5;
     public int attack = 2;
-    public int attackRange = 1;
+    public int attackRange = 2;
 
 
     Vector3 velocity = new Vector3();
-    Vector3 heading = new Vector3();
+    public Vector3 heading = new Vector3();
 
     float halfHeight = 0;
 
@@ -170,10 +171,11 @@ public class TacticsMove : MonoBehaviour
         {
             RemoveSelectableTiles();
             moving = false;
+            hasMoved = true;
 
             
             //Will end turn Once unit is done moving, change when implementing combat
-            BetterTurnManager.EndTurn();
+            
         }
     }
     protected void RemoveSelectableTiles()
@@ -427,5 +429,48 @@ public class TacticsMove : MonoBehaviour
     {
         BetterTurnManager.RemoveUnit(gameObject);
         
+    }
+
+    public bool InRange(GameObject target)
+    {
+        ComputeAdjacencyLists(jumpHeight, null);
+        GetCurrentTile();
+        Tile targetTile = GetTargetTile(target);
+
+        Queue<Tile> process = new Queue<Tile>();
+
+        process.Enqueue(currentTile);
+        currentTile.visited = true;
+
+        while (process.Count > 0)
+        {
+            Tile t = process.Dequeue();
+            
+            if (t == targetTile)
+            {
+                Debug.Log("target in range");
+                return true;
+            }
+
+            if (t.distance < attackRange)
+            {
+                foreach (Tile tile in t.adjacencyList)
+                {
+                    if (!tile.visited)
+                    {
+                        tile.parent = t;
+                        tile.visited = true;
+                        tile.distance = 1 + t.distance;
+                        process.Enqueue(tile);
+
+                    }
+
+
+                }
+            }
+        }
+        RemoveSelectableTiles();
+        Debug.Log("target out of range");
+        return false;
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class NPCMove : TacticsMove
 {
 
-    GameObject target;
+    public GameObject target;
     
     
     
@@ -45,15 +45,19 @@ public class NPCMove : TacticsMove
 
         
     }
+    public void Refresh()
+    {
+        hasMoved = false;
+    }
 
-    private void CalculatePath()
+    public void CalculatePath()
     {
         Tile targetTile = GetTargetTile(target);
         FindPath(targetTile);
         
     }
 
-    void FindNearestTarget()
+    public void FindNearestTarget()
     {
         GameObject[] targets = GameObject.FindGameObjectsWithTag("Player");
 
@@ -75,4 +79,6 @@ public class NPCMove : TacticsMove
 
         target = nearest;
     }
+
+    
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerMove : TacticsMove
 {
+    public bool hasAttacked = false;
 
     private void Awake()
     {
@@ -15,7 +16,7 @@ public class PlayerMove : TacticsMove
 
         Debug.DrawRay(transform.position, transform.forward);
 
-        if(!turn)
+        if (!turn)
         {
             return;
         }
@@ -29,7 +30,13 @@ public class PlayerMove : TacticsMove
         {
             Move();
         }
-        
+
+    }
+
+    public void Refresh()
+    {
+        hasMoved = false;
+        hasAttacked = false;
     }
 
     public void CheckMouse()
@@ -50,7 +57,14 @@ public class PlayerMove : TacticsMove
                         MoveToTile(t);
                     }
                 }
+                if(hit.collider.tag == "NPC")
+                {
+                    Debug.Log("Attacking Enemy");
+                    InRange(hit.collider.gameObject);
+                }
             }
         }
     }
+
+    
 }
