@@ -18,6 +18,12 @@ public class TacticsMove : MonoBehaviour
     public float jumpVelocity = 4.5f;
 
 
+    //Unit Stats//
+    public int health = 5;
+    public int attack = 2;
+    public int attackRange = 1;
+
+
     Vector3 velocity = new Vector3();
     Vector3 heading = new Vector3();
 
@@ -39,7 +45,7 @@ public class TacticsMove : MonoBehaviour
 
         halfHeight = GetComponent<Collider>().bounds.extents.y;
 
-        TurnManager.AddUnit(this);
+        BetterTurnManager.AddUnit(gameObject);
     }
 
 
@@ -162,12 +168,12 @@ public class TacticsMove : MonoBehaviour
         }
         else
         {
-            //todo:remove selectable tiles
+            RemoveSelectableTiles();
             moving = false;
 
             
             //Will end turn Once unit is done moving, change when implementing combat
-            TurnManager.EndTurn();
+            BetterTurnManager.EndTurn();
         }
     }
     protected void RemoveSelectableTiles()
@@ -403,5 +409,23 @@ public class TacticsMove : MonoBehaviour
             endTile = tempPath.Pop();
         }
         return endTile;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+
+        if (health <= 0)
+        {
+            health = 0;
+            Die();
+        }
+        
+    }
+    
+    public void Die()
+    {
+        BetterTurnManager.RemoveUnit(gameObject);
+        
     }
 }

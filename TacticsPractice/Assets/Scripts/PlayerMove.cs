@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerMove : TacticsMove
 {
 
-    private void Start()
+    private void Awake()
     {
         Init();
     }

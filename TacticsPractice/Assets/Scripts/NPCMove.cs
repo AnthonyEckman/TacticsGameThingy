@@ -10,7 +10,7 @@ public class NPCMove : TacticsMove
     
     
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         Init();
     }
@@ -19,7 +19,10 @@ public class NPCMove : TacticsMove
     void Update()
     {
         Debug.DrawRay(transform.position, transform.forward);
-
+        if (health <= 0)
+        {
+            Die();
+        }
         if (!turn)
         {
             return;
@@ -39,6 +42,8 @@ public class NPCMove : TacticsMove
             
             Move();
         }
+
+        
     }
 
     private void CalculatePath()

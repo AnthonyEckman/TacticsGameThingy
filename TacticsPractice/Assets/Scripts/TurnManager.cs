@@ -10,7 +10,7 @@ public class TurnManager : MonoBehaviour
     static Dictionary<string, List<TacticsMove>> units = new Dictionary<string, List<TacticsMove>>();
     static Queue<string> turnKey = new Queue<string>();
     static Queue<TacticsMove> turnTeam = new Queue<TacticsMove>();
-
+    static bool gameOver = false;
     
     
     // Start is called before the first frame update
@@ -52,7 +52,10 @@ public class TurnManager : MonoBehaviour
     {
         TacticsMove unit = turnTeam.Dequeue();
         unit.EndTurn();
-        
+        if(gameOver)
+        {
+            Debug.Log("yay");
+        }
         if(turnTeam.Count > 0)
         {
             StartTurn();
@@ -87,5 +90,15 @@ public class TurnManager : MonoBehaviour
         }
         list.Add(unit);
     }
-    //public static void RemoveUnit(TacticsMove unit)
+    public static void RemoveUnit(TacticsMove unit)
+    {
+        
+
+        if(!units.ContainsKey(unit.tag))
+        {
+            gameOver = true;
+            Debug.Log("You WIN!");
+        }
+
+    }
 }
