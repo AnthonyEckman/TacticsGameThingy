@@ -281,8 +281,8 @@ public class TacticsMove : MonoBehaviour
         {
             movingEdge = false;
             fallingDown = true;
-
-            velocity /= 3.0f;
+            
+            velocity /= 4.0f;
             velocity.y = 1.5f;
         }
     }
@@ -391,14 +391,14 @@ public class TacticsMove : MonoBehaviour
             next = next.parent;
         }
 
-        if (tempPath.Count <=move)
+        if (tempPath.Count <= move)
         {
             return t.parent;
 
         }
 
         Tile endTile = null;
-        for (int i = 0; i <= 0; i++)
+        for (int i = 0; i <= move; i++)
         {
             endTile = tempPath.Pop();
         }
