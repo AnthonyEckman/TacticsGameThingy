@@ -32,6 +32,7 @@ public class PlayerMove : TacticsMove
         }
 
     }
+    
 
     public void Refresh()
     {

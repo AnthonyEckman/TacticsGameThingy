@@ -170,11 +170,12 @@ public class TacticsMove : MonoBehaviour
         else
         {
             RemoveSelectableTiles();
-            moving = false;
             hasMoved = true;
+            moving = false;
+            
 
             
-            //Will end turn Once unit is done moving, change when implementing combat
+            
             
         }
     }
@@ -299,9 +300,12 @@ public class TacticsMove : MonoBehaviour
         GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
         camera.GetComponent<CameraController>().ChangeTarget(gameObject);
         turn = true;
+        hasMoved = false;
+        moving = false;
     }
     public void EndTurn()
     {
+        RemoveSelectableTiles();
         turn = false;
     }
 
@@ -449,6 +453,7 @@ public class TacticsMove : MonoBehaviour
             if (t == targetTile)
             {
                 Debug.Log("target in range");
+                RemoveSelectableTiles();
                 return true;
             }
 

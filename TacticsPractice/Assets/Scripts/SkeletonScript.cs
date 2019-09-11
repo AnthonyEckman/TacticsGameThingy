@@ -21,10 +21,10 @@ public class SkeletonScript : NPCMove
         {
             return;
         }
-
+        Debug.Log(moving);
         if (!moving)
         {
-
+            
             FindNearestTarget();
             CalculatePath();
             FindSelectableTiles();

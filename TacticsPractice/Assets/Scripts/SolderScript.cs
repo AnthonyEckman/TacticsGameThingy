@@ -36,9 +36,9 @@ public class SolderScript : PlayerMove
 
     }
 
+    
 
-
-    public void CheckMouse()
+    public new void CheckMouse()
     {
         if (Input.GetMouseButtonUp(0))
         {
@@ -59,20 +59,20 @@ public class SolderScript : PlayerMove
                 if (hit.collider.tag == "NPC")
                 {
                     Debug.Log("Attacking Enemy");
-                    if(InRange(hit.collider.gameObject))
+                    if(InRange(hit.collider.gameObject) && !hasAttacked)
                     {
                         Attack(hit.collider.gameObject);
+                        
                     }
                     else
                     {
-                        Refresh();
-                        BetterTurnManager.EndTurn();
+                        Debug.Log("Target Out Of Range");
                     }
                 }
             }
         }
     }
-
+    
     private void Attack(GameObject target)
     {
         CalculateHeading(target.transform.position);
