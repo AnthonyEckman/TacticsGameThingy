@@ -60,6 +60,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Archer.cs" />
+    <Compile Include="Assets\Scripts\ArrowScript.cs" />
     <Compile Include="Assets\Scripts\BetterTurnManager.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\ICombat.cs" />
